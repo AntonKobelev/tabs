@@ -64,6 +64,26 @@ function Tab({ num, activeTab, onClick }) {
 function TabContent({ item }) {
   const [likes, setLikes] = useState(0);
   const [showDetails, setShowDetails] = useState(true);
+
+  function handleIncrementLikes() {
+    setLikes((likes) => likes + 1);
+  }
+
+  function handleIncrementTripleLikes() {
+    setLikes((likes) => likes + 1);
+    setLikes((likes) => likes + 1);
+    setLikes((likes) => likes + 1);
+  }
+
+  function undoState() {
+    setLikes((likes) => 0);
+    setShowDetails((show) => true);
+  }
+
+  function undoStateInTwoSeconds() {
+    setTimeout(undoState, 2000);
+  }
+
   return (
     <div className="tab-content">
       <h4>{item.summary}</h4>
@@ -74,13 +94,13 @@ function TabContent({ item }) {
         </button>
         <div className="hearts-counter">
           <span>{likes} ❤️</span>
-          <button onClick={() => setLikes((like) => like + 1)}>+</button>
-          <button>+++</button>
+          <button onClick={handleIncrementLikes}>+</button>
+          <button onClick={handleIncrementTripleLikes}>+++</button>
         </div>
       </div>
       <div className="tab-undo">
-        <button>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={undoState}>Undo</button>
+        <button onClick={undoStateInTwoSeconds}>Undo in 2s</button>
       </div>
     </div>
   );
